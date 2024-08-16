@@ -1,0 +1,36 @@
+mutation CreateNewPost($input: CreatePostInput!) {
+    createPost(input: $input) 
+}
+
+mutation UpdateExistingPost($input: UpdatePostInput!) {
+    updatePost(input: $input) 
+}
+
+mutation DeleteExistingPost($input: DeletePostInput!) {
+    deletePost(input: $input) 
+}
+
+mutation CreateNewComment($input: CreateCommentInput!) {
+    createComment(input: $input) 
+}
+
+mutation UpdateExistingComment($input: UpdateCommentInput!) {
+    updateComment(input: $input) 
+}
+
+mutation DeleteExistingComment($input: DeleteCommentInput!) {
+    deleteComment(input: $input) 
+}
+
+mutation CreateNewUser($input: CreateUserInput!) {
+    createUser(input: $input) 
+}
+
+mutation UpdateExistingUser($input: UpdateUserInput!) {
+    updateUser(input: $input) 
+}
+
+mutation DeleteExistingUser($input: DeleteUserInput!) {
+    deleteUser(input: $input) 
+}
+

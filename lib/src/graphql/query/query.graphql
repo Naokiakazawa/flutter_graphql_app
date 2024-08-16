@@ -1,0 +1,86 @@
+query GetPostById($postId: Int!) {
+  post(id: $postId) {
+    id
+    title
+    content
+    userId
+  }
+}
+
+query GetAllPosts {
+  posts {
+    id
+    title
+    content
+    userId
+  }
+}
+
+query GetPostsPerPage($page: Int!, $pageSize: Int!) {
+  postsPerPage(page: $page, pageSize: $pageSize) {
+    totalPages
+    posts {
+      id
+      title
+      content
+      userId
+    }
+  }
+}
+
+query GetCommentById($id: Int!) {
+  comment(id: $id) {
+    id
+    content
+    postId
+    userId
+  }
+}
+
+query GetAllComments {
+  comments {
+    id
+    content
+    postId
+    userId
+  }
+}
+
+query GetCommentsPerPage($page: Int!, $pageSize: Int!) {
+  commentsPerPage(page: $page, pageSize: $pageSize) {
+    totalPages
+    comments {
+      id
+      content
+      postId
+      userId
+    }
+  }
+}
+
+query GetUserById($userId: Int!) {
+  user(id: $userId) {
+    id
+    username
+    email
+  }
+}
+
+query GetAllUsers {
+  users {
+    id
+    username
+    email
+  }
+}
+
+query GetUsersPerPage($page: Int!, $pageSize: Int!) {
+  usersPerPage(page: $page, pageSize: $pageSize) {
+    totalPages
+    users {
+      id
+      username
+      email
+    }
+  }
+}
