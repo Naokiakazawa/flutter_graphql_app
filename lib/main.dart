@@ -1,11 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:gql_http_link/gql_http_link.dart';
+import 'package:ferry/ferry.dart';
+import 'package:ferry_hive_store/ferry_hive_store.dart';
+import 'package:graphql_app/src/graphql/__generated__/schema.schema.gql.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-void main() {
-  runApp(const MyApp());
+Future<Client> initClient() async {
+  await Hive.initFlutter();
+  final box = await Hive.openBox('graphql');
+  final store = HiveStore(box);
+  final cache = Cache(store: store, possibleTypes: possibleTypesMap);
+  final link = HttpLink('http://localhost:8080/graphql');
+  final client = Client(link: link, cache: cache);
+  return client;
+}
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final client = await initClient();
+  runApp(MyApp(client: client));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final Client client;
+  const MyApp({super.key, required this.client});
 
   // This widget is the root of your application.
   @override

@@ -1,0 +1,119 @@
+
+type CommentModel {
+	id: Int!
+	content: String!
+	postId: Int!
+	userId: Int!
+}
+
+input CreateCommentInput {
+	content: String!
+	postId: Int!
+	userId: Int!
+}
+
+input CreatePostInput {
+	title: String!
+	content: String!
+	userId: Int!
+}
+
+input CreateUserInput {
+	username: String!
+	email: String!
+	passwordHash: String!
+}
+
+input DeleteCommentInput {
+	id: Int!
+}
+
+input DeletePostInput {
+	id: Int!
+}
+
+input DeleteUserInput {
+	id: Int!
+}
+
+
+
+
+type MutationRoot {
+	createPost(input: CreatePostInput!): Int!
+	updatePost(input: UpdatePostInput!): Int!
+	deletePost(input: DeletePostInput!): Int!
+	createComment(input: CreateCommentInput!): Int!
+	updateComment(input: UpdateCommentInput!): Int!
+	deleteComment(input: DeleteCommentInput!): Int!
+	createUser(input: CreateUserInput!): Int!
+	updateUser(input: UpdateUserInput!): Int!
+	deleteUser(input: DeleteUserInput!): Int!
+}
+
+type PaginatedComments {
+	totalPages: Int!
+	comments: [CommentModel!]!
+}
+
+type PaginatedPosts {
+	totalPages: Int!
+	posts: [PostModel!]!
+}
+
+type PaginatedUsers {
+	totalPages: Int!
+	users: [UserModel!]!
+}
+
+type PostModel {
+	id: Int!
+	title: String!
+	content: String!
+	userId: Int!
+}
+
+type QueryRoot {
+	hello: String!
+	post(id: Int!): PostModel
+	posts: [PostModel!]!
+	postsPerPage(page: Int!, pageSize: Int!): PaginatedPosts!
+	user(id: Int!): UserModel
+	users: [UserModel!]!
+	usersPerPage(page: Int!, pageSize: Int!): PaginatedUsers!
+	comment(id: Int!): CommentModel
+	comments: [CommentModel!]!
+	commentsPerPage(page: Int!, pageSize: Int!): PaginatedComments!
+}
+
+
+input UpdateCommentInput {
+	id: Int!
+	content: String
+}
+
+input UpdatePostInput {
+	id: Int!
+	title: String
+	content: String
+}
+
+input UpdateUserInput {
+	id: Int!
+	username: String
+	email: String
+	passwordHash: String
+}
+
+type UserModel {
+	id: Int!
+	username: String!
+	email: String!
+}
+
+directive @include(if: Boolean!) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
+directive @skip(if: Boolean!) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
+schema {
+	query: QueryRoot
+	mutation: MutationRoot
+}
