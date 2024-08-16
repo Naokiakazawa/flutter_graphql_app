@@ -1,86 +1,117 @@
+import 'package:ferry_flutter/ferry_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:gql_http_link/gql_http_link.dart';
 import 'package:ferry/ferry.dart';
 import 'package:ferry_hive_store/ferry_hive_store.dart';
 import 'package:graphql_app/src/graphql/__generated__/schema.schema.gql.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:graphql_app/src/graphql/query/__generated__/query.data.gql.dart';
+import 'package:graphql_app/src/graphql/query/__generated__/query.req.gql.dart';
+import 'package:graphql_app/src/graphql/query/__generated__/query.var.gql.dart';
 
 Future<Client> initClient() async {
   await Hive.initFlutter();
   final box = await Hive.openBox('graphql');
   final store = HiveStore(box);
   final cache = Cache(store: store, possibleTypes: possibleTypesMap);
-  final link = HttpLink('http://localhost:8080/graphql');
+  final link = HttpLink('http://127.0.0.1:8080/graphql');
   final client = Client(link: link, cache: cache);
   return client;
 }
 
+final clientProvider = FutureProvider<Client>((ref) async {
+  return await initClient();
+});
+
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  final client = await initClient();
-  runApp(MyApp(client: client));
+  runApp(
+    const ProviderScope(
+      child: MyApp(),
+    ),
+  );
 }
 
-class MyApp extends StatelessWidget {
-  final Client client;
-  const MyApp({super.key, required this.client});
+class MyApp extends ConsumerWidget {
+  const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
-      title: 'Flutter Demo!',
+      title: 'Flutter GraphQL Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo'),
+      home: const MyHomePage(title: 'Flutter GraphQL Demo'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
+class MyHomePage extends ConsumerWidget {
   const MyHomePage({super.key, required this.title});
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final clientAsync = ref.watch(clientProvider);
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        title: Text(title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
+      body: clientAsync.when(
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (error, stack) => Center(child: Text('Error: $error')),
+        data: (client) => PostList(client: client),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
+    );
+  }
+}
+
+class PostList extends StatelessWidget {
+  final Client client;
+  PostList({super.key, required this.client});
+
+  final getAllPosts =
+      GGetAllPostsReq((b) => b..fetchPolicy = FetchPolicy.NoCache);
+
+  @override
+  Widget build(BuildContext context) {
+    return Operation(
+      operationRequest: getAllPosts,
+      client: client,
+      builder: (
+        BuildContext context,
+        OperationResponse<GGetAllPostsData, GGetAllPostsVars>? response,
+        Object? error,
+      ) {
+        if (response?.loading ?? true) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        if (response?.hasErrors ?? true) {
+          return Center(child: Text('Error: $error'));
+        }
+
+        final posts = response?.data?.posts;
+
+        if (posts == null) {
+          return const Center(child: Text('No posts found'));
+        }
+
+        return ListView.builder(
+          itemCount: posts.length,
+          itemBuilder: (context, index) {
+            final post = posts[index];
+            return ListTile(
+              title: Text(post.title),
+              subtitle: Text(post.content),
+            );
+          },
+        );
+      },
     );
   }
 }
