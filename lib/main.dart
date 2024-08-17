@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:gql_http_link/gql_http_link.dart';
 import 'package:ferry/ferry.dart';
 import 'package:ferry_hive_store/ferry_hive_store.dart';
-import 'package:graphql_app/src/graphql/__generated__/schema.schema.gql.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:graphql_app/src/graphql/__generated__/schema.schema.gql.dart';
 import 'package:graphql_app/src/graphql/query/__generated__/query.data.gql.dart';
 import 'package:graphql_app/src/graphql/query/__generated__/query.req.gql.dart';
 import 'package:graphql_app/src/graphql/query/__generated__/query.var.gql.dart';
@@ -105,13 +106,54 @@ class PostList extends StatelessWidget {
           itemCount: posts.length,
           itemBuilder: (context, index) {
             final post = posts[index];
-            return ListTile(
-              title: Text(post.title),
-              subtitle: Text(post.content),
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PostDetailPage(post: post),
+                  ),
+                );
+              },
+              child: ListTile(
+                title: Text(post.title),
+                subtitle: Text(post.userId.toString()),
+              ),
             );
           },
         );
       },
+    );
+  }
+}
+
+class PostDetailPage extends StatelessWidget {
+  final GGetAllPostsData_posts post;
+  const PostDetailPage({super.key, required this.post});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(post.title),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              post.title,
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            const SizedBox(height: 16),
+            Text(
+              post.content,
+              style: Theme.of(context).textTheme.bodyMedium,
+            )
+          ],
+        ),
+      ),
     );
   }
 }
