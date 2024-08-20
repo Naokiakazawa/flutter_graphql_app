@@ -44,6 +44,14 @@ class MyApp extends ConsumerWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
+      darkTheme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.deepPurple,
+          brightness: Brightness.dark,
+        ),
+        useMaterial3: true,
+      ),
+      themeMode: ThemeMode.dark,
       home: const MyHomePage(title: 'Flutter GraphQL Demo'),
     );
   }
@@ -117,7 +125,7 @@ class PostList extends StatelessWidget {
               },
               child: ListTile(
                 title: Text(post.title),
-                subtitle: Text(post.userId.toString()),
+                subtitle: Text(post.content),
               ),
             );
           },
@@ -138,7 +146,7 @@ class PostDetailPage extends StatelessWidget {
         title: Text(post.title),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -149,8 +157,8 @@ class PostDetailPage extends StatelessWidget {
             const SizedBox(height: 16),
             Text(
               post.content,
-              style: Theme.of(context).textTheme.bodyMedium,
-            )
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
           ],
         ),
       ),
