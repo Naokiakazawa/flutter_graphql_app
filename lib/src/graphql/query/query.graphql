@@ -58,6 +58,14 @@ query GetCommentsPerPage($page: Int!, $pageSize: Int!) {
   }
 }
 
+query GetCommentsByPostId($postId: Int!) {
+  commentsByPostId(postId: $postId) {
+    id
+    content
+    userId
+  }
+}
+
 query GetUserById($userId: Int!) {
   user(id: $userId) {
     id

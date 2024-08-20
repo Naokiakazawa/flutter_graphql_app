@@ -495,6 +495,88 @@ abstract class GGetCommentsPerPageReq
       );
 }
 
+abstract class GGetCommentsByPostIdReq
+    implements
+        Built<GGetCommentsByPostIdReq, GGetCommentsByPostIdReqBuilder>,
+        _i1.OperationRequest<_i2.GGetCommentsByPostIdData,
+            _i3.GGetCommentsByPostIdVars> {
+  GGetCommentsByPostIdReq._();
+
+  factory GGetCommentsByPostIdReq(
+          [void Function(GGetCommentsByPostIdReqBuilder b) updates]) =
+      _$GGetCommentsByPostIdReq;
+
+  static void _initializeBuilder(GGetCommentsByPostIdReqBuilder b) => b
+    ..operation = _i4.Operation(
+      document: _i5.document,
+      operationName: 'GetCommentsByPostId',
+    )
+    ..executeOnListen = true;
+
+  @override
+  _i3.GGetCommentsByPostIdVars get vars;
+  @override
+  _i4.Operation get operation;
+  @override
+  _i4.Request get execRequest => _i4.Request(
+        operation: operation,
+        variables: vars.toJson(),
+        context: context ?? const _i4.Context(),
+      );
+
+  @override
+  String? get requestId;
+  @override
+  @BuiltValueField(serialize: false)
+  _i2.GGetCommentsByPostIdData? Function(
+    _i2.GGetCommentsByPostIdData?,
+    _i2.GGetCommentsByPostIdData?,
+  )? get updateResult;
+  @override
+  _i2.GGetCommentsByPostIdData? get optimisticResponse;
+  @override
+  String? get updateCacheHandlerKey;
+  @override
+  Map<String, dynamic>? get updateCacheHandlerContext;
+  @override
+  _i1.FetchPolicy? get fetchPolicy;
+  @override
+  bool get executeOnListen;
+  @override
+  @BuiltValueField(serialize: false)
+  _i4.Context? get context;
+  @override
+  _i2.GGetCommentsByPostIdData? parseData(Map<String, dynamic> json) =>
+      _i2.GGetCommentsByPostIdData.fromJson(json);
+
+  @override
+  Map<String, dynamic> varsToJson() => vars.toJson();
+
+  @override
+  Map<String, dynamic> dataToJson(_i2.GGetCommentsByPostIdData data) =>
+      data.toJson();
+
+  @override
+  _i1.OperationRequest<_i2.GGetCommentsByPostIdData,
+      _i3.GGetCommentsByPostIdVars> transformOperation(
+          _i4.Operation Function(_i4.Operation) transform) =>
+      this.rebuild((b) => b..operation = transform(operation));
+
+  static Serializer<GGetCommentsByPostIdReq> get serializer =>
+      _$gGetCommentsByPostIdReqSerializer;
+
+  Map<String, dynamic> toJson() => (_i6.serializers.serializeWith(
+        GGetCommentsByPostIdReq.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GGetCommentsByPostIdReq? fromJson(Map<String, dynamic> json) =>
+      _i6.serializers.deserializeWith(
+        GGetCommentsByPostIdReq.serializer,
+        json,
+      );
+}
+
 abstract class GGetUserByIdReq
     implements
         Built<GGetUserByIdReq, GGetUserByIdReqBuilder>,

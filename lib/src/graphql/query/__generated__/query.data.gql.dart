@@ -453,6 +453,71 @@ abstract class GGetCommentsPerPageData_commentsPerPage_comments
       );
 }
 
+abstract class GGetCommentsByPostIdData
+    implements
+        Built<GGetCommentsByPostIdData, GGetCommentsByPostIdDataBuilder> {
+  GGetCommentsByPostIdData._();
+
+  factory GGetCommentsByPostIdData(
+          [void Function(GGetCommentsByPostIdDataBuilder b) updates]) =
+      _$GGetCommentsByPostIdData;
+
+  static void _initializeBuilder(GGetCommentsByPostIdDataBuilder b) =>
+      b..G__typename = 'QueryRoot';
+
+  @BuiltValueField(wireName: '__typename')
+  String get G__typename;
+  BuiltList<GGetCommentsByPostIdData_commentsByPostId> get commentsByPostId;
+  static Serializer<GGetCommentsByPostIdData> get serializer =>
+      _$gGetCommentsByPostIdDataSerializer;
+
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GGetCommentsByPostIdData.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GGetCommentsByPostIdData? fromJson(Map<String, dynamic> json) =>
+      _i1.serializers.deserializeWith(
+        GGetCommentsByPostIdData.serializer,
+        json,
+      );
+}
+
+abstract class GGetCommentsByPostIdData_commentsByPostId
+    implements
+        Built<GGetCommentsByPostIdData_commentsByPostId,
+            GGetCommentsByPostIdData_commentsByPostIdBuilder> {
+  GGetCommentsByPostIdData_commentsByPostId._();
+
+  factory GGetCommentsByPostIdData_commentsByPostId(
+      [void Function(GGetCommentsByPostIdData_commentsByPostIdBuilder b)
+          updates]) = _$GGetCommentsByPostIdData_commentsByPostId;
+
+  static void _initializeBuilder(
+          GGetCommentsByPostIdData_commentsByPostIdBuilder b) =>
+      b..G__typename = 'CommentModel';
+
+  @BuiltValueField(wireName: '__typename')
+  String get G__typename;
+  int get id;
+  String get content;
+  int get userId;
+  static Serializer<GGetCommentsByPostIdData_commentsByPostId> get serializer =>
+      _$gGetCommentsByPostIdDataCommentsByPostIdSerializer;
+
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GGetCommentsByPostIdData_commentsByPostId.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GGetCommentsByPostIdData_commentsByPostId? fromJson(
+          Map<String, dynamic> json) =>
+      _i1.serializers.deserializeWith(
+        GGetCommentsByPostIdData_commentsByPostId.serializer,
+        json,
+      );
+}
+
 abstract class GGetUserByIdData
     implements Built<GGetUserByIdData, GGetUserByIdDataBuilder> {
   GGetUserByIdData._();

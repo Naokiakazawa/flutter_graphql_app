@@ -18,6 +18,8 @@ Serializer<GGetAllCommentsVars> _$gGetAllCommentsVarsSerializer =
     new _$GGetAllCommentsVarsSerializer();
 Serializer<GGetCommentsPerPageVars> _$gGetCommentsPerPageVarsSerializer =
     new _$GGetCommentsPerPageVarsSerializer();
+Serializer<GGetCommentsByPostIdVars> _$gGetCommentsByPostIdVarsSerializer =
+    new _$GGetCommentsByPostIdVarsSerializer();
 Serializer<GGetUserByIdVars> _$gGetUserByIdVarsSerializer =
     new _$GGetUserByIdVarsSerializer();
 Serializer<GGetAllUsersVars> _$gGetAllUsersVarsSerializer =
@@ -252,6 +254,51 @@ class _$GGetCommentsPerPageVarsSerializer
           break;
         case 'pageSize':
           result.pageSize = serializers.deserialize(value,
+              specifiedType: const FullType(int))! as int;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$GGetCommentsByPostIdVarsSerializer
+    implements StructuredSerializer<GGetCommentsByPostIdVars> {
+  @override
+  final Iterable<Type> types = const [
+    GGetCommentsByPostIdVars,
+    _$GGetCommentsByPostIdVars
+  ];
+  @override
+  final String wireName = 'GGetCommentsByPostIdVars';
+
+  @override
+  Iterable<Object?> serialize(
+      Serializers serializers, GGetCommentsByPostIdVars object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'postId',
+      serializers.serialize(object.postId, specifiedType: const FullType(int)),
+    ];
+
+    return result;
+  }
+
+  @override
+  GGetCommentsByPostIdVars deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new GGetCommentsByPostIdVarsBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'postId':
+          result.postId = serializers.deserialize(value,
               specifiedType: const FullType(int))! as int;
           break;
       }
@@ -867,6 +914,94 @@ class GGetCommentsPerPageVarsBuilder
                 page, r'GGetCommentsPerPageVars', 'page'),
             pageSize: BuiltValueNullFieldError.checkNotNull(
                 pageSize, r'GGetCommentsPerPageVars', 'pageSize'));
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$GGetCommentsByPostIdVars extends GGetCommentsByPostIdVars {
+  @override
+  final int postId;
+
+  factory _$GGetCommentsByPostIdVars(
+          [void Function(GGetCommentsByPostIdVarsBuilder)? updates]) =>
+      (new GGetCommentsByPostIdVarsBuilder()..update(updates))._build();
+
+  _$GGetCommentsByPostIdVars._({required this.postId}) : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        postId, r'GGetCommentsByPostIdVars', 'postId');
+  }
+
+  @override
+  GGetCommentsByPostIdVars rebuild(
+          void Function(GGetCommentsByPostIdVarsBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  GGetCommentsByPostIdVarsBuilder toBuilder() =>
+      new GGetCommentsByPostIdVarsBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is GGetCommentsByPostIdVars && postId == other.postId;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, postId.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'GGetCommentsByPostIdVars')
+          ..add('postId', postId))
+        .toString();
+  }
+}
+
+class GGetCommentsByPostIdVarsBuilder
+    implements
+        Builder<GGetCommentsByPostIdVars, GGetCommentsByPostIdVarsBuilder> {
+  _$GGetCommentsByPostIdVars? _$v;
+
+  int? _postId;
+  int? get postId => _$this._postId;
+  set postId(int? postId) => _$this._postId = postId;
+
+  GGetCommentsByPostIdVarsBuilder();
+
+  GGetCommentsByPostIdVarsBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _postId = $v.postId;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(GGetCommentsByPostIdVars other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$GGetCommentsByPostIdVars;
+  }
+
+  @override
+  void update(void Function(GGetCommentsByPostIdVarsBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  GGetCommentsByPostIdVars build() => _build();
+
+  _$GGetCommentsByPostIdVars _build() {
+    final _$result = _$v ??
+        new _$GGetCommentsByPostIdVars._(
+            postId: BuiltValueNullFieldError.checkNotNull(
+                postId, r'GGetCommentsByPostIdVars', 'postId'));
     replace(_$result);
     return _$result;
   }

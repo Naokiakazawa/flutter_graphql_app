@@ -48,6 +48,10 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(GGetCommentByIdData_comment.serializer)
       ..add(GGetCommentByIdReq.serializer)
       ..add(GGetCommentByIdVars.serializer)
+      ..add(GGetCommentsByPostIdData.serializer)
+      ..add(GGetCommentsByPostIdData_commentsByPostId.serializer)
+      ..add(GGetCommentsByPostIdReq.serializer)
+      ..add(GGetCommentsByPostIdVars.serializer)
       ..add(GGetCommentsPerPageData.serializer)
       ..add(GGetCommentsPerPageData_commentsPerPage.serializer)
       ..add(GGetCommentsPerPageData_commentsPerPage_comments.serializer)
@@ -95,6 +99,11 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(
               BuiltList, const [const FullType(GGetAllUsersData_users)]),
           () => new ListBuilder<GGetAllUsersData_users>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [
+            const FullType(GGetCommentsByPostIdData_commentsByPostId)
+          ]),
+          () => new ListBuilder<GGetCommentsByPostIdData_commentsByPostId>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [
             const FullType(GGetCommentsPerPageData_commentsPerPage_comments)

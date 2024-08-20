@@ -151,6 +151,31 @@ abstract class GGetCommentsPerPageVars
       );
 }
 
+abstract class GGetCommentsByPostIdVars
+    implements
+        Built<GGetCommentsByPostIdVars, GGetCommentsByPostIdVarsBuilder> {
+  GGetCommentsByPostIdVars._();
+
+  factory GGetCommentsByPostIdVars(
+          [void Function(GGetCommentsByPostIdVarsBuilder b) updates]) =
+      _$GGetCommentsByPostIdVars;
+
+  int get postId;
+  static Serializer<GGetCommentsByPostIdVars> get serializer =>
+      _$gGetCommentsByPostIdVarsSerializer;
+
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GGetCommentsByPostIdVars.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GGetCommentsByPostIdVars? fromJson(Map<String, dynamic> json) =>
+      _i1.serializers.deserializeWith(
+        GGetCommentsByPostIdVars.serializer,
+        json,
+      );
+}
+
 abstract class GGetUserByIdVars
     implements Built<GGetUserByIdVars, GGetUserByIdVarsBuilder> {
   GGetUserByIdVars._();

@@ -39,6 +39,11 @@ Serializer<GGetCommentsPerPageData_commentsPerPage>
 Serializer<GGetCommentsPerPageData_commentsPerPage_comments>
     _$gGetCommentsPerPageDataCommentsPerPageCommentsSerializer =
     new _$GGetCommentsPerPageData_commentsPerPage_commentsSerializer();
+Serializer<GGetCommentsByPostIdData> _$gGetCommentsByPostIdDataSerializer =
+    new _$GGetCommentsByPostIdDataSerializer();
+Serializer<GGetCommentsByPostIdData_commentsByPostId>
+    _$gGetCommentsByPostIdDataCommentsByPostIdSerializer =
+    new _$GGetCommentsByPostIdData_commentsByPostIdSerializer();
 Serializer<GGetUserByIdData> _$gGetUserByIdDataSerializer =
     new _$GGetUserByIdDataSerializer();
 Serializer<GGetUserByIdData_user> _$gGetUserByIdDataUserSerializer =
@@ -933,6 +938,128 @@ class _$GGetCommentsPerPageData_commentsPerPage_commentsSerializer
         case 'postId':
           result.postId = serializers.deserialize(value,
               specifiedType: const FullType(int))! as int;
+          break;
+        case 'userId':
+          result.userId = serializers.deserialize(value,
+              specifiedType: const FullType(int))! as int;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$GGetCommentsByPostIdDataSerializer
+    implements StructuredSerializer<GGetCommentsByPostIdData> {
+  @override
+  final Iterable<Type> types = const [
+    GGetCommentsByPostIdData,
+    _$GGetCommentsByPostIdData
+  ];
+  @override
+  final String wireName = 'GGetCommentsByPostIdData';
+
+  @override
+  Iterable<Object?> serialize(
+      Serializers serializers, GGetCommentsByPostIdData object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      '__typename',
+      serializers.serialize(object.G__typename,
+          specifiedType: const FullType(String)),
+      'commentsByPostId',
+      serializers.serialize(object.commentsByPostId,
+          specifiedType: const FullType(BuiltList, const [
+            const FullType(GGetCommentsByPostIdData_commentsByPostId)
+          ])),
+    ];
+
+    return result;
+  }
+
+  @override
+  GGetCommentsByPostIdData deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new GGetCommentsByPostIdDataBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case '__typename':
+          result.G__typename = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'commentsByPostId':
+          result.commentsByPostId.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltList, const [
+                const FullType(GGetCommentsByPostIdData_commentsByPostId)
+              ]))! as BuiltList<Object?>);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$GGetCommentsByPostIdData_commentsByPostIdSerializer
+    implements StructuredSerializer<GGetCommentsByPostIdData_commentsByPostId> {
+  @override
+  final Iterable<Type> types = const [
+    GGetCommentsByPostIdData_commentsByPostId,
+    _$GGetCommentsByPostIdData_commentsByPostId
+  ];
+  @override
+  final String wireName = 'GGetCommentsByPostIdData_commentsByPostId';
+
+  @override
+  Iterable<Object?> serialize(
+      Serializers serializers, GGetCommentsByPostIdData_commentsByPostId object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      '__typename',
+      serializers.serialize(object.G__typename,
+          specifiedType: const FullType(String)),
+      'id',
+      serializers.serialize(object.id, specifiedType: const FullType(int)),
+      'content',
+      serializers.serialize(object.content,
+          specifiedType: const FullType(String)),
+      'userId',
+      serializers.serialize(object.userId, specifiedType: const FullType(int)),
+    ];
+
+    return result;
+  }
+
+  @override
+  GGetCommentsByPostIdData_commentsByPostId deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new GGetCommentsByPostIdData_commentsByPostIdBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case '__typename':
+          result.G__typename = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int))! as int;
+          break;
+        case 'content':
+          result.content = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
           break;
         case 'userId':
           result.userId = serializers.deserialize(value,
@@ -3299,6 +3426,276 @@ class GGetCommentsPerPageData_commentsPerPage_commentsBuilder
                 r'GGetCommentsPerPageData_commentsPerPage_comments', 'postId'),
             userId: BuiltValueNullFieldError.checkNotNull(userId,
                 r'GGetCommentsPerPageData_commentsPerPage_comments', 'userId'));
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$GGetCommentsByPostIdData extends GGetCommentsByPostIdData {
+  @override
+  final String G__typename;
+  @override
+  final BuiltList<GGetCommentsByPostIdData_commentsByPostId> commentsByPostId;
+
+  factory _$GGetCommentsByPostIdData(
+          [void Function(GGetCommentsByPostIdDataBuilder)? updates]) =>
+      (new GGetCommentsByPostIdDataBuilder()..update(updates))._build();
+
+  _$GGetCommentsByPostIdData._(
+      {required this.G__typename, required this.commentsByPostId})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        G__typename, r'GGetCommentsByPostIdData', 'G__typename');
+    BuiltValueNullFieldError.checkNotNull(
+        commentsByPostId, r'GGetCommentsByPostIdData', 'commentsByPostId');
+  }
+
+  @override
+  GGetCommentsByPostIdData rebuild(
+          void Function(GGetCommentsByPostIdDataBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  GGetCommentsByPostIdDataBuilder toBuilder() =>
+      new GGetCommentsByPostIdDataBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is GGetCommentsByPostIdData &&
+        G__typename == other.G__typename &&
+        commentsByPostId == other.commentsByPostId;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, G__typename.hashCode);
+    _$hash = $jc(_$hash, commentsByPostId.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'GGetCommentsByPostIdData')
+          ..add('G__typename', G__typename)
+          ..add('commentsByPostId', commentsByPostId))
+        .toString();
+  }
+}
+
+class GGetCommentsByPostIdDataBuilder
+    implements
+        Builder<GGetCommentsByPostIdData, GGetCommentsByPostIdDataBuilder> {
+  _$GGetCommentsByPostIdData? _$v;
+
+  String? _G__typename;
+  String? get G__typename => _$this._G__typename;
+  set G__typename(String? G__typename) => _$this._G__typename = G__typename;
+
+  ListBuilder<GGetCommentsByPostIdData_commentsByPostId>? _commentsByPostId;
+  ListBuilder<GGetCommentsByPostIdData_commentsByPostId> get commentsByPostId =>
+      _$this._commentsByPostId ??=
+          new ListBuilder<GGetCommentsByPostIdData_commentsByPostId>();
+  set commentsByPostId(
+          ListBuilder<GGetCommentsByPostIdData_commentsByPostId>?
+              commentsByPostId) =>
+      _$this._commentsByPostId = commentsByPostId;
+
+  GGetCommentsByPostIdDataBuilder() {
+    GGetCommentsByPostIdData._initializeBuilder(this);
+  }
+
+  GGetCommentsByPostIdDataBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _G__typename = $v.G__typename;
+      _commentsByPostId = $v.commentsByPostId.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(GGetCommentsByPostIdData other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$GGetCommentsByPostIdData;
+  }
+
+  @override
+  void update(void Function(GGetCommentsByPostIdDataBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  GGetCommentsByPostIdData build() => _build();
+
+  _$GGetCommentsByPostIdData _build() {
+    _$GGetCommentsByPostIdData _$result;
+    try {
+      _$result = _$v ??
+          new _$GGetCommentsByPostIdData._(
+              G__typename: BuiltValueNullFieldError.checkNotNull(
+                  G__typename, r'GGetCommentsByPostIdData', 'G__typename'),
+              commentsByPostId: commentsByPostId.build());
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'commentsByPostId';
+        commentsByPostId.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'GGetCommentsByPostIdData', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$GGetCommentsByPostIdData_commentsByPostId
+    extends GGetCommentsByPostIdData_commentsByPostId {
+  @override
+  final String G__typename;
+  @override
+  final int id;
+  @override
+  final String content;
+  @override
+  final int userId;
+
+  factory _$GGetCommentsByPostIdData_commentsByPostId(
+          [void Function(GGetCommentsByPostIdData_commentsByPostIdBuilder)?
+              updates]) =>
+      (new GGetCommentsByPostIdData_commentsByPostIdBuilder()..update(updates))
+          ._build();
+
+  _$GGetCommentsByPostIdData_commentsByPostId._(
+      {required this.G__typename,
+      required this.id,
+      required this.content,
+      required this.userId})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(G__typename,
+        r'GGetCommentsByPostIdData_commentsByPostId', 'G__typename');
+    BuiltValueNullFieldError.checkNotNull(
+        id, r'GGetCommentsByPostIdData_commentsByPostId', 'id');
+    BuiltValueNullFieldError.checkNotNull(
+        content, r'GGetCommentsByPostIdData_commentsByPostId', 'content');
+    BuiltValueNullFieldError.checkNotNull(
+        userId, r'GGetCommentsByPostIdData_commentsByPostId', 'userId');
+  }
+
+  @override
+  GGetCommentsByPostIdData_commentsByPostId rebuild(
+          void Function(GGetCommentsByPostIdData_commentsByPostIdBuilder)
+              updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  GGetCommentsByPostIdData_commentsByPostIdBuilder toBuilder() =>
+      new GGetCommentsByPostIdData_commentsByPostIdBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is GGetCommentsByPostIdData_commentsByPostId &&
+        G__typename == other.G__typename &&
+        id == other.id &&
+        content == other.content &&
+        userId == other.userId;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, G__typename.hashCode);
+    _$hash = $jc(_$hash, id.hashCode);
+    _$hash = $jc(_$hash, content.hashCode);
+    _$hash = $jc(_$hash, userId.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(
+            r'GGetCommentsByPostIdData_commentsByPostId')
+          ..add('G__typename', G__typename)
+          ..add('id', id)
+          ..add('content', content)
+          ..add('userId', userId))
+        .toString();
+  }
+}
+
+class GGetCommentsByPostIdData_commentsByPostIdBuilder
+    implements
+        Builder<GGetCommentsByPostIdData_commentsByPostId,
+            GGetCommentsByPostIdData_commentsByPostIdBuilder> {
+  _$GGetCommentsByPostIdData_commentsByPostId? _$v;
+
+  String? _G__typename;
+  String? get G__typename => _$this._G__typename;
+  set G__typename(String? G__typename) => _$this._G__typename = G__typename;
+
+  int? _id;
+  int? get id => _$this._id;
+  set id(int? id) => _$this._id = id;
+
+  String? _content;
+  String? get content => _$this._content;
+  set content(String? content) => _$this._content = content;
+
+  int? _userId;
+  int? get userId => _$this._userId;
+  set userId(int? userId) => _$this._userId = userId;
+
+  GGetCommentsByPostIdData_commentsByPostIdBuilder() {
+    GGetCommentsByPostIdData_commentsByPostId._initializeBuilder(this);
+  }
+
+  GGetCommentsByPostIdData_commentsByPostIdBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _G__typename = $v.G__typename;
+      _id = $v.id;
+      _content = $v.content;
+      _userId = $v.userId;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(GGetCommentsByPostIdData_commentsByPostId other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$GGetCommentsByPostIdData_commentsByPostId;
+  }
+
+  @override
+  void update(
+      void Function(GGetCommentsByPostIdData_commentsByPostIdBuilder)?
+          updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  GGetCommentsByPostIdData_commentsByPostId build() => _build();
+
+  _$GGetCommentsByPostIdData_commentsByPostId _build() {
+    final _$result = _$v ??
+        new _$GGetCommentsByPostIdData_commentsByPostId._(
+            G__typename: BuiltValueNullFieldError.checkNotNull(G__typename,
+                r'GGetCommentsByPostIdData_commentsByPostId', 'G__typename'),
+            id: BuiltValueNullFieldError.checkNotNull(
+                id, r'GGetCommentsByPostIdData_commentsByPostId', 'id'),
+            content: BuiltValueNullFieldError.checkNotNull(content,
+                r'GGetCommentsByPostIdData_commentsByPostId', 'content'),
+            userId: BuiltValueNullFieldError.checkNotNull(userId,
+                r'GGetCommentsByPostIdData_commentsByPostId', 'userId'));
     replace(_$result);
     return _$result;
   }
