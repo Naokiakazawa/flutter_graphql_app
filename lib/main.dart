@@ -135,12 +135,14 @@ class PostList extends StatelessWidget {
   }
 }
 
-class PostDetailPage extends StatelessWidget {
+class PostDetailPage extends ConsumerWidget {
   final GGetAllPostsData_posts post;
   const PostDetailPage({super.key, required this.post});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final clientAsync = ref.watch(clientProvider);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(post.title),
@@ -159,9 +161,62 @@ class PostDetailPage extends StatelessWidget {
               post.content,
               style: Theme.of(context).textTheme.bodyLarge,
             ),
+            const SizedBox(height: 16),
+            clientAsync.when(
+              loading: () => const Center(child: CircularProgressIndicator()),
+              error: (error, stack) => Center(child: Text('Error: $error')),
+              data: (client) => CommentList(client: client, postId: post.id),
+            ),
           ],
         ),
       ),
     );
+  }
+}
+
+class CommentList extends StatelessWidget {
+  final Client client;
+  final int postId;
+  const CommentList({super.key, required this.client, required this.postId});
+
+  @override
+  Widget build(BuildContext context) {
+    return Operation<GGetCommentsByPostIdData, GGetCommentsByPostIdVars>(
+        client: client,
+        operationRequest: GGetCommentsByPostIdReq(
+          (b) => b
+            ..vars.postId = postId
+            ..fetchPolicy = FetchPolicy.NoCache,
+        ),
+        builder: (context, response, error) {
+          if (response?.loading ?? true) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          if (response?.hasErrors ?? true) {
+            return Center(child: Text('Error: $error'));
+          }
+
+          final comments = response?.data?.commentsByPostId;
+
+          if (comments == null) {
+            return const Center(child: Text('No comments found'));
+          }
+
+          return Flexible(
+            child: ListView.builder(
+              // shrinkWrap: true,
+              // physics: const NeverScrollableScrollPhysics(),
+              itemCount: comments.length,
+              itemBuilder: (context, index) {
+                final comment = comments[index];
+                return ListTile(
+                  title: Text(comment.content),
+                  subtitle: Text(comment.userId.toString()),
+                );
+              },
+            ),
+          );
+        });
   }
 }
