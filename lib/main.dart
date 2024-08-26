@@ -1,29 +1,13 @@
 import 'package:ferry_flutter/ferry_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:gql_http_link/gql_http_link.dart';
 import 'package:ferry/ferry.dart';
-import 'package:ferry_hive_store/ferry_hive_store.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:graphql_app/src/graphql/__generated__/schema.schema.gql.dart';
+import 'package:graphql_app/src/providers.dart';
+
 import 'package:graphql_app/src/graphql/query/__generated__/query.data.gql.dart';
 import 'package:graphql_app/src/graphql/query/__generated__/query.req.gql.dart';
 import 'package:graphql_app/src/graphql/query/__generated__/query.var.gql.dart';
-
-Future<Client> initClient() async {
-  await Hive.initFlutter();
-  final box = await Hive.openBox('graphql');
-  final store = HiveStore(box);
-  final cache = Cache(store: store, possibleTypes: possibleTypesMap);
-  final link = HttpLink('http://127.0.0.1:8080/graphql');
-  final client = Client(link: link, cache: cache);
-  return client;
-}
-
-final clientProvider = FutureProvider<Client>((ref) async {
-  return await initClient();
-});
 
 void main() async {
   runApp(
@@ -162,11 +146,13 @@ class PostDetailPage extends ConsumerWidget {
               style: Theme.of(context).textTheme.bodyLarge,
             ),
             const SizedBox(height: 16),
-            clientAsync.when(
-              loading: () => const Center(child: CircularProgressIndicator()),
-              error: (error, stack) => Center(child: Text('Error: $error')),
-              data: (client) => CommentList(client: client, postId: post.id),
-            ),
+            Expanded(
+              child: clientAsync.when(
+                loading: () => const Center(child: CircularProgressIndicator()),
+                error: (error, stack) => Center(child: Text('Error: $error')),
+                data: (client) => CommentList(client: client, postId: post.id),
+              ),
+            )
           ],
         ),
       ),
@@ -203,19 +189,17 @@ class CommentList extends StatelessWidget {
             return const Center(child: Text('No comments found'));
           }
 
-          return Flexible(
-            child: ListView.builder(
-              // shrinkWrap: true,
-              // physics: const NeverScrollableScrollPhysics(),
-              itemCount: comments.length,
-              itemBuilder: (context, index) {
-                final comment = comments[index];
-                return ListTile(
-                  title: Text(comment.content),
-                  subtitle: Text(comment.userId.toString()),
-                );
-              },
-            ),
+          return ListView.builder(
+            // shrinkWrap: true,
+            // physics: const NeverScrollableScrollPhysics(),
+            itemCount: comments.length,
+            itemBuilder: (context, index) {
+              final comment = comments[index];
+              return ListTile(
+                title: Text(comment.content),
+                subtitle: Text(comment.userId.toString()),
+              );
+            },
           );
         });
   }
